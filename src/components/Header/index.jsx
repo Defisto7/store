@@ -9,8 +9,10 @@ import Logo from "../../images/logo.svg";
 import Avatar from "../../images/avatar.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleForm } from "../../features/user/userSlice";
+import { useGetProductQuery } from "../../features/api/apiSlice";
 
 const Header = () => {
+    const [searchValue, setSearchValue ] = useState("")
     const [values, setValues] = useState({ name: "Guest", avatar: Avatar });
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -26,6 +28,10 @@ const Header = () => {
 
         setValues(currentUser);
     }, [currentUser]);
+
+    const handleSearch = ({target: {value}}) => {
+        setSearchValue(value)
+    }
 
     return (
         <div className={s.header}>
@@ -57,8 +63,8 @@ const Header = () => {
                             name="search"
                             placeholder="Search for anyting..."
                             autoComplete="off"
-                            onChange={() => {}}
-                            value=""
+                            onChange={handleSearch}
+                            value={searchValue}
                         />
                     </div>
 
